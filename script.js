@@ -7,6 +7,133 @@ hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
 });
 
+// Particle Canvas Animation
+const canvas = document.getElementById('particleCanvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 80;
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 2 - 1;
+            this.speedY = Math.random() * 2 - 1;
+            this.color = `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 255, ${Math.random() * 0.5 + 0.3})`;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+            if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 120) {
+                    ctx.strokeStyle = `rgba(102, 126, 234, ${0.2 * (1 - distance / 120)})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Product Showcase Card Rotation
+const showcaseCards = document.querySelectorAll('.showcase-card');
+const navDots = document.querySelectorAll('.nav-dot');
+let currentCard = 0;
+
+function showCard(index) {
+    showcaseCards.forEach((card, i) => {
+        card.classList.remove('active');
+        navDots[i].classList.remove('active');
+    });
+    showcaseCards[index].classList.add('active');
+    navDots[index].classList.add('active');
+}
+
+// Auto-rotate cards
+if (showcaseCards.length > 0) {
+    setInterval(() => {
+        currentCard = (currentCard + 1) % showcaseCards.length;
+        showCard(currentCard);
+    }, 4000);
+}
+
+// Manual navigation
+navDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        currentCard = index;
+        showCard(currentCard);
+    });
+});
+
+// Counter Animation
+const counters = document.querySelectorAll('.counter');
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = parseInt(entry.target.getAttribute('data-target'));
+            let count = 0;
+            const increment = target / 60;
+            const timer = setInterval(() => {
+                count += increment;
+                if (count >= target) {
+                    entry.target.textContent = target + (target === 9 ? '' : '+');
+                    clearInterval(timer);
+                } else {
+                    entry.target.textContent = Math.floor(count) + (target === 9 ? '' : '+');
+                }
+            }, 30);
+            counterObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+counters.forEach(counter => counterObserver.observe(counter));
+
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', () => {

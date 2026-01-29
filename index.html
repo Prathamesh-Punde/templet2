@@ -32,94 +32,194 @@
             </div>
         </div>
     </nav>
-
+<div class="spacer"></div>
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <!-- Animated Background -->
+        <canvas id="particleCanvas"></canvas>
         <div class="hero-overlay"></div>
+        
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Transform Your Business with <span class="gradient-text">Perfect Solutions</span></h1>
-                <p class="hero-subtitle">We deliver cutting-edge software solutions that drive innovation and accelerate your digital transformation journey</p>
-                <div class="hero-buttons">
-                    <a href="contact.html" class="btn btn-primary">Get Started</a>
-                    <a href="product.html" class="btn btn-secondary">View Products</a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <h3>500+</h3>
-                        <p>Projects Delivered</p>
+            <div class="hero-grid">
+                <!-- Left Content -->
+                <div class="hero-left">
+                    
+                    
+                    <h1 class="hero-title">
+                        <span class="title-line">Revolutionize Your</span>
+                        <span class="title-line">Business With</span>
+                        <span class="title-highlight">
+                            <span class="highlight-text" data-text="Perfect Software">Perfect Software</span>
+                        </span>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        From <strong>Hospital Management</strong> to <strong>Retail Solutions</strong> - 
+                        Experience the power of intelligent automation with our 9 premium billing products
+                    </p>
+                    
+                    <div class="hero-features">
+                        <div class="feature-tag">
+                            <i class="fas fa-check-circle"></i>
+                            <span>One-Time Purchase</span>
+                        </div>
+                        <div class="feature-tag">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Lifetime Updates</span>
+                        </div>
+                        <div class="feature-tag">
+                            <i class="fas fa-check-circle"></i>
+                            <span>On Call Support</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <h3>200+</h3>
+                    
+                    <div class="hero-cta">
+                        <a href="product.html" class="btn-hero btn-hero-primary">
+                            <span class="btn-text">Explore Products</span>
+                            <span class="btn-shine"></span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="contact.html" class="btn-hero btn-hero-secondary">
+                            <i class="fas fa-phone-alt"></i>
+                            <span class="btn-text">Get Free Demo</span>
+                        </a>
+                    </div>
+                    
+                    <div class="hero-trust">
+                        <div class="trust-avatars">
+                            <div class="avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <i class="fas fa-hospital"></i>
+                            </div>
+                            <div class="avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <i class="fas fa-warehouse"></i>
+                            </div>
+                            <div class="avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                        <div class="trust-text">
+                            <p class="trust-number">200+ Businesses Trust Us</p>
+                            <div class="trust-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>4.9/5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Content - Product Showcase -->
+                <div class="hero-right">
+                    <div class="product-showcase">
+                        <div class="showcase-card card-1 active">
+                            <div class="card-badge">Best Seller</div>
+                            <div class="card-icon">
+                                <i class="fas fa-hospital-user"></i>
+                            </div>
+                            <h3>Hospital Management</h3>
+                            <p>Complete OPD & Patient Management System</p>
+                            <div class="card-features">
+                                <span><i class="fas fa-check"></i> Queue Management</span>
+                                <span><i class="fas fa-check"></i> Digital Prescriptions</span>
+                            </div>
+                            <a href="contact.html?service=billing-hospitalManagement" class="card-btn">
+                                Get Started <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="showcase-card card-2">
+                            <div class="card-badge premium">Premium</div>
+                            <div class="card-icon">
+                                <i class="fas fa-cocktail"></i>
+                            </div>
+                            <h3>Excise Management</h3>
+                            <p>Hotel/Bar & Liquor License Management</p>
+                            <div class="card-features">
+                                <span><i class="fas fa-check"></i> FLR Compliance</span>
+                                <span><i class="fas fa-check"></i> Inventory Control</span>
+                            </div>
+                            <a href="contact.html?service=billing-enterprise" class="card-btn">
+                                Get Started <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="showcase-card card-3">
+                            <div class="card-badge popular">Popular</div>
+                            <div class="card-icon">
+                                <i class="fas fa-cash-register"></i>
+                            </div>
+                            <h3>Retail Billing</h3>
+                            <p>Advanced POS with Barcode & Reports</p>
+                            <div class="card-features">
+                                <span><i class="fas fa-check"></i> 100+ Reports</span>
+                                <span><i class="fas fa-check"></i> Stock Management</span>
+                            </div>
+                            <a href="contact.html?service=billing-retail" class="card-btn">
+                                Get Started <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="showcase-nav">
+                        <button class="nav-dot active" data-card="1"></button>
+                        <button class="nav-dot" data-card="2"></button>
+                        <button class="nav-dot" data-card="3"></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Bar -->
+            <div class="hero-stats-bar">
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="counter" data-target="9">0</h3>
+                        <p>Premium Products</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="counter" data-target="200">0</h3>
                         <p>Happy Clients</p>
                     </div>
-                    <div class="stat-item">
-                        <h3>15+</h3>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="counter" data-target="15">0</h3>
                         <p>Years Experience</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="counter" data-target="2000">0</h3>
+                        <p>Projects Delivered</p>
                     </div>
                 </div>
             </div>
         </div>
+        
         <div class="scroll-indicator">
             <div class="mouse"></div>
         </div>
     </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Our Services</h2>
-                <p class="section-subtitle">Comprehensive solutions tailored to your business needs</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>App Development</h3>
-                    <p>Create powerful mobile applications for iOS and Android platforms with intuitive user experiences and robust functionality.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Native & Cross-Platform Apps</li>
-                        <li><i class="fas fa-check"></i> UI/UX Design</li>
-                        <li><i class="fas fa-check"></i> App Maintenance & Support</li>
-                    </ul>
-                    <a href="contact.html?service=app" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <div class="service-card featured">
-                    <div class="featured-badge">Popular</div>
-                    <div class="service-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Web Development</h3>
-                    <p>Build responsive, scalable web applications that deliver exceptional performance and engaging user experiences.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Custom Web Applications</li>
-                        <li><i class="fas fa-check"></i> E-commerce Solutions</li>
-                        <li><i class="fas fa-check"></i> CMS Development</li>
-                    </ul>
-                    <a href="contact.html?service=web" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h3>Software Development</h3>
-                    <p>Develop enterprise-grade software solutions that streamline operations and drive business growth.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Custom Software Solutions</li>
-                        <li><i class="fas fa-check"></i> Enterprise Applications</li>
-                        <li><i class="fas fa-check"></i> System Integration</li>
-                    </ul>
-                    <a href="contact.html?service=software" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
+     <!-- Products Section -->
     <section id="products" class="products">
         <div class="container">
             <div class="section-header">
@@ -186,7 +286,7 @@
                         </div>
                         <div class="feature-item">
                             <i class="fas fa-check-circle"></i>
-                            <span>24/7 Support</span>
+                            <span>on call Support</span>
                         </div>
                     </div>
                     <div class="product-footer">
@@ -238,6 +338,62 @@
         </div>
     </section>
 
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Comprehensive solutions tailored to your business needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>App Development</h3>
+                    <p>Create powerful mobile applications for iOS and Android platforms with intuitive user experiences and robust functionality.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Native & Cross-Platform Apps</li>
+                        <li><i class="fas fa-check"></i> UI/UX Design</li>
+                        <li><i class="fas fa-check"></i> App Maintenance & Support</li>
+                    </ul>
+                    <a href="contact.html?service=app" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="service-card featured">
+                    <div class="featured-badge">Popular</div>
+                    <div class="service-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Build responsive, scalable web applications that deliver exceptional performance and engaging user experiences.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Custom Web Applications</li>
+                        <li><i class="fas fa-check"></i> E-commerce Solutions</li>
+                        <li><i class="fas fa-check"></i> CMS Development</li>
+                    </ul>
+                    <a href="contact.html?service=web" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Software Development</h3>
+                    <p>Develop enterprise-grade software solutions that streamline operations and drive business growth.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Custom Software Solutions</li>
+                        <li><i class="fas fa-check"></i> Enterprise Applications</li>
+                        <li><i class="fas fa-check"></i> System Integration</li>
+                    </ul>
+                    <a href="contact.html?service=software" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
     <!-- Why Choose Us Section -->
     <section class="why-choose">
         <div class="container">
@@ -263,7 +419,7 @@
                         <div class="why-feature">
                             <i class="fas fa-headset"></i>
                             <div>
-                                <h4>24/7 Support</h4>
+                                <h4>On Call Support</h4>
                                 <p>Round-the-clock technical support for all our products</p>
                             </div>
                         </div>
