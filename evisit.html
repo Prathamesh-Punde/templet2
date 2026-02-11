@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Visiting Card - Perfect Software Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <img src="images/logo.jpeg" alt="Perfect Software Solutions">
+                    <div class="logo-text">
+                        <span class="logo-name">Perfect Software Solutions</span>
+                        <span class="logo-domain">pssindia</span>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="product.html">Product</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="evisit.html" class="active">E-Visit</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Digital Visiting Card</h1>
+            <p>Connect with us digitally</p>
+        </div>
+    </section>
+
+    <!-- E-Visiting Card Section -->
+    <section class="evisit-section">
+        <div class="container">
+            <div class="evisit-card">
+                <div class="evisit-header">
+                    <img src="images/logo.jpeg" alt="Perfect Software Solutions" class="evisit-logo">
+                    <h2>Perfect Software Solutions</h2>
+                    <p class="evisit-tagline">Leading Software Development Company</p>
+                </div>
+
+                <div class="evisit-content">
+                    <div class="evisit-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:uday_catuphale@yahoo.in">uday_catuphale@yahoo.in</a>
+                        </div>
+                    </div>
+
+                    <div class="evisit-info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <a href="tel:+919422291397">+91 94222 91397</a>
+                        </div>
+                    </div>
+
+                    <div class="evisit-info-item">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h4>Website</h4>
+                            <a href="https://www.pssindia.com" target="_blank">www.pssindia.com</a>
+                        </div>
+                    </div>
+
+                    <div class="evisit-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>New Shreya Nagar, Shreya Nagar Old, Ramanagar, Chhatrapati Sambhajinagar, Maharashtra 431005</p>
+                        </div>
+                    </div>
+
+                    <!-- Map Section -->
+                    <div class="evisit-map">
+                        <h4><i class="fas fa-location-dot"></i> Find Us Here</h4>
+                        <div class="map-container">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3478.712362258759!2d75.33207371043635!3d19.868749481428807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdb980d62c9a229%3A0x5472fe95062206b1!2sPerfect%20Software%20Solution!5e1!3m2!1sen!2sin!4v1768467100849!5m2!1sen!2sin" 
+                                width="100%" 
+                                height="300" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="evisit-social">
+                        <h4>Connect With Us</h4>
+                        <div class="social-icons">
+                            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Download VCard Button -->
+                    <div class="evisit-actions">
+                        <button class="btn-primary" onclick="downloadVCard()">
+                            <i class="fas fa-download"></i> Save Contact
+                        </button>
+                        <button class="btn-secondary" onclick="shareCard()">
+                            <i class="fas fa-share-alt"></i> Share Card
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Perfect Software Solutions</h4>
+                    <p>Transforming businesses through innovative software solutions. Your trusted partner in digital transformation.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="product.html">Product</a></li>
+                        <li><a href="support.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="contact.html">App Development</a></li>
+                        <li><a href="contact.html">Web Development</a></li>
+                        <li><a href="contact.html">Software Development</a></li>
+                        <li><a href="product.html">Billing Software</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get updates on our latest products and services.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Perfect Software Solutions (pssindia.com). All rights reserved.</p>
+            </div>
+        </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        function downloadVCard() {
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Perfect Software Solutions
+ORG:Perfect Software Solutions
+TEL;TYPE=WORK,VOICE:+919422291397
+EMAIL;TYPE=PREF,INTERNET:uday_catuphale@yahoo.in
+ADR;TYPE=WORK:;;New Shreya Nagar, Shreya Nagar Old, Ramanagar, Chhatrapati Sambhajinagar, Maharashtra 431005
+URL:https://www.pssindia.com
+END:VCARD`;
+            
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Perfect_Software_Solutions.vcf';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function shareCard() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Perfect Software Solutions',
+                    text: 'Check out our digital visiting card!',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                alert('Share feature is not supported on this browser. Copy the URL to share: ' + window.location.href);
+            }
+        }
+    </script>
+</body>
+</html>

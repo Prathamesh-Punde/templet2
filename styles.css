@@ -2607,3 +2607,284 @@ section {
         grid-template-columns: 1fr;
     }
 }
+
+/* E-Visiting Card Styles */
+.evisit-section {
+    padding: 100px 0 80px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+}
+
+.evisit-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.evisit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+}
+
+.evisit-header {
+    background: var(--gradient);
+    padding: 50px 40px;
+    text-align: center;
+    color: white;
+}
+
+.evisit-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-bottom: 20px;
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.evisit-header h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.evisit-tagline {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    font-weight: 300;
+}
+
+.evisit-content {
+    padding: 40px;
+}
+
+.evisit-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 25px;
+    margin-bottom: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.evisit-info-item:hover {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
+}
+
+.evisit-info-item i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-top: 5px;
+    min-width: 30px;
+}
+
+.evisit-info-item h4 {
+    color: var(--text-dark);
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.evisit-info-item p,
+.evisit-info-item a {
+    color: var(--text-light);
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.evisit-info-item a:hover {
+    color: var(--primary-color);
+}
+
+.evisit-map {
+    margin-top: 30px;
+    padding: 25px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.evisit-map h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+
+.evisit-map h4 i {
+    color: var(--primary-color);
+}
+
+.map-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.map-container iframe {
+    display: block;
+    width: 100%;
+}
+
+.evisit-social {
+    margin-top: 30px;
+    padding: 25px;
+    text-align: center;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px;
+}
+
+.evisit-social h4 {
+    margin-bottom: 20px;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.social-icons a:hover {
+    background: var(--gradient);
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.evisit-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 15px 35px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: var(--gradient);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background: var(--gradient-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Responsive Design for E-Visit */
+@media (max-width: 768px) {
+    .evisit-section {
+        padding: 80px 0 60px;
+    }
+
+    .evisit-card {
+        margin: 0 15px;
+    }
+
+    .evisit-header {
+        padding: 40px 30px;
+    }
+
+    .evisit-logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .evisit-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .evisit-tagline {
+        font-size: 1rem;
+    }
+
+    .evisit-content {
+        padding: 30px 20px;
+    }
+
+    .evisit-info-item {
+        padding: 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .evisit-info-item i {
+        font-size: 1.3rem;
+    }
+
+    .evisit-map,
+    .evisit-social {
+        padding: 20px;
+    }
+
+    .social-icons a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .evisit-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
