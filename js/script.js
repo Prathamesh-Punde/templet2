@@ -374,4 +374,24 @@ scrollTopBtn.addEventListener('mouseleave', function() {
     this.style.boxShadow = '0 4px 15px rgba(99, 102, 241, 0.4)';
 });
 
+// FAQ Accordion
+const faqQuestions = document.querySelectorAll('.faq-question');
+
+faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Toggle current item
+        if (!isActive) {
+            faqItem.classList.add('active');
+        }
+    });
+});
+
 console.log('Perfect Software Solutions - Website Loaded Successfully!');

@@ -56,9 +56,10 @@ body {
 
 .nav-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 1rem 0;
+    gap: 10rem;
 }
 
 .logo {
@@ -68,6 +69,7 @@ body {
     font-size: 1.4rem;
     font-weight: 700;
     color: var(--primary-color);
+    margin-right: auto;
 }
 
 .logo-text {
