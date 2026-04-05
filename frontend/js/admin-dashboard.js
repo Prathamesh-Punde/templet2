@@ -1,0 +1,228 @@
+// API Configuration
+const API_URL = '/api';
+
+function clearSessionAndRedirect() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '../admin/admin-login.html';
+}
+
+function getStoredUser() {
+    try {
+        const rawUser = localStorage.getItem('user');
+        return rawUser ? JSON.parse(rawUser) : null;
+    } catch (error) {
+        return null;
+    }
+}
+
+// Check authentication
+const token = localStorage.getItem('token');
+const user = getStoredUser();
+
+if (!token || !user) {
+    clearSessionAndRedirect();
+    throw new Error('Invalid session. Redirecting to login.');
+}
+
+// Set user info
+document.getElementById('userName').textContent = user.username;
+document.getElementById('userEmail').textContent = user.email;
+document.getElementById('userRole').textContent = user.role.replace('_', ' ').toUpperCase();
+
+// Show/hide navigation based on role
+function setupNavigation() {
+    const careersNav = document.getElementById('careersNav');
+    const supportNav = document.getElementById('supportNav');
+    const enquiriesNav = document.getElementById('enquiriesNav');
+    const usersNav = document.getElementById('usersNav');
+    const superAdminQuickActions = document.getElementById('superAdminQuickActions');
+    
+    if (user.role === 'super_admin') {
+        careersNav.style.display = 'block';
+        supportNav.style.display = 'block';
+        enquiriesNav.style.display = 'block';
+        usersNav.style.display = 'block';
+        superAdminQuickActions.style.display = 'flex';
+    } else if (user.role === 'hr') {
+        careersNav.style.display = 'block';
+    } else if (user.role === 'customer_support') {
+        supportNav.style.display = 'block';
+    } else if (user.role === 'enquiry_follow_up_executive') {
+        enquiriesNav.style.display = 'block';
+    }
+}
+
+function openAddUserFromDashboard() {
+    const usersNavLink = document.querySelector('.nav-menu a[data-section="users"]');
+    const usersFrame = document.getElementById('usersFrame');
+
+    if (!usersNavLink || !usersFrame) {
+        return;
+    }
+
+    // Reuse existing navigation logic by triggering the users tab click.
+    usersNavLink.click();
+
+    // Ask the users iframe to open the Add User modal.
+    setTimeout(() => {
+        usersFrame.contentWindow.postMessage({ type: 'OPEN_ADD_USER_MODAL' }, window.location.origin);
+    }, 150);
+}
+
+// Load dashboard statistics
+async function loadStatistics() {
+    const statsGrid = document.getElementById('statsGrid');
+    statsGrid.innerHTML = '';
+    
+    try {
+        if (user.role === 'hr' || user.role === 'super_admin') {
+            const response = await fetch(`${API_URL}/careers`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            
+            const activeCount = data.careers.filter(c => c.is_active).length;
+            
+            statsGrid.innerHTML += `
+                <div class="stat-card">
+                    <h3>Total Careers</h3>
+                    <div class="number">${data.count}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Positions</h3>
+                    <div class="number">${activeCount}</div>
+                </div>
+            `;
+        }
+        
+        if (user.role === 'customer_support' || user.role === 'super_admin') {
+            const response = await fetch(`${API_URL}/support/tickets/statistics`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            const stats = data.statistics;
+            
+            statsGrid.innerHTML += `
+                <div class="stat-card">
+                    <h3>Total Tickets</h3>
+                    <div class="number">${stats.total_tickets}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <div class="number">${stats.pending}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>In Progress</h3>
+                    <div class="number">${stats.in_progress}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Resolved</h3>
+                    <div class="number">${stats.resolved}</div>
+                </div>
+            `;
+        }
+
+        if (user.role === 'enquiry_follow_up_executive' || user.role === 'super_admin') {
+            const response = await fetch(`${API_URL}/enquiries/statistics`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            const stats = data.statistics;
+
+            statsGrid.innerHTML += `
+                <div class="stat-card">
+                    <h3>Total Enquiries</h3>
+                    <div class="number">${stats.total_enquiries}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>New</h3>
+                    <div class="number">${stats.new_count}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Contacted</h3>
+                    <div class="number">${stats.contacted}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Follow Up</h3>
+                    <div class="number">${stats.follow_up}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Converted</h3>
+                    <div class="number">${stats.converted}</div>
+                </div>
+            `;
+        }
+        
+        if (user.role === 'super_admin') {
+            const response = await fetch(`${API_URL}/users`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            
+            statsGrid.innerHTML += `
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="number">${data.count}</div>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Error loading statistics:', error);
+    }
+}
+
+// Navigation handler
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Update active link
+        document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        
+        // Show corresponding section
+        const section = link.getAttribute('data-section');
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(section).classList.add('active');
+        
+        // Update page title
+        document.getElementById('pageTitle').textContent = 
+            link.textContent.charAt(0).toUpperCase() + link.textContent.slice(1);
+    });
+});
+
+// Logout handler
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+        await fetch(`${API_URL}/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
+    
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '../admin/admin-login.html';
+});
+
+const quickAddUserBtn = document.getElementById('quickAddUserBtn');
+if (quickAddUserBtn) {
+    quickAddUserBtn.addEventListener('click', openAddUserFromDashboard);
+}
+
+// Initialize
+setupNavigation();
+loadStatistics();

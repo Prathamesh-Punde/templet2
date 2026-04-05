@@ -180,13 +180,37 @@ if (contactForm) {
         
         // Get form values
         const formData = new FormData(contactForm);
-        
-        // Here you would typically send the data to a server
-        // For now, we'll just show a success message
-        alert('Thank you for your message! We will get back to you soon.');
-        
-        // Reset form
-        contactForm.reset();
+
+        const enquiryData = {
+            name: formData.get('name')?.trim(),
+            email: formData.get('email')?.trim(),
+            phone: formData.get('phone')?.trim(),
+            subject: formData.get('subject')?.trim(),
+            service: formData.get('service')?.trim(),
+            message: formData.get('message')?.trim()
+        };
+
+        fetch('/api/enquiries', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(enquiryData)
+        })
+            .then(async (response) => {
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to submit enquiry');
+                }
+
+                alert('Thank you for your enquiry! Our team will contact you soon.');
+                contactForm.reset();
+            })
+            .catch((error) => {
+                console.error('Contact form submission error:', error);
+                alert(error.message || 'Unable to submit enquiry right now.');
+            });
     });
 }
 

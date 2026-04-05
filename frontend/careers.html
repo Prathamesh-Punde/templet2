@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Careers - Perfect Software Solutions</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -107,130 +107,67 @@
                 <p class="section-subtitle">Find your perfect role</p>
             </div>
             <div class="positions-list">
-                <div class="position-card">
-                    <div class="position-header">
-                        <div>
-                            <h3>Senior Software Developer</h3>
-                            <div class="position-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Aurangabad, Maharashtra</span>
-                                <span><i class="fas fa-briefcase"></i> Full-time</span>
-                                <span><i class="fas fa-clock"></i> Posted 2 days ago</span>
-                            </div>
-                        </div>
-                        <span class="position-badge">Urgent</span>
-                    </div>
-                    <p class="position-description">We're looking for an experienced software developer with strong skills in .NET, C#, and database management.</p>
-                    <div class="position-requirements">
-                        <h4>Requirements:</h4>
-                        <ul>
-                            <li>5+ years of software development experience</li>
-                            <li>Strong knowledge of .NET Framework, C#, ASP.NET</li>
-                            <li>Experience with SQL Server and database design</li>
-                            <li>Good understanding of software design patterns</li>
-                        </ul>
-                    </div>
-                    <div class="position-footer">
-                        <div class="position-salary">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>4-8 LPA</span>
-                        </div>
-                        <a href="contact.html" class="btn btn-primary">Apply Now</a>
-                    </div>
-                </div>
-
-                <div class="position-card">
-                    <div class="position-header">
-                        <div>
-                            <h3>UI/UX Designer</h3>
-                            <div class="position-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Aurangabad, Maharashtra</span>
-                                <span><i class="fas fa-briefcase"></i> Full-time</span>
-                                <span><i class="fas fa-clock"></i> Posted 1 week ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="position-description">Join our creative team to design intuitive and beautiful user interfaces for our software products.</p>
-                    <div class="position-requirements">
-                        <h4>Requirements:</h4>
-                        <ul>
-                            <li>3+ years of UI/UX design experience</li>
-                            <li>Proficiency in Figma, Adobe XD, or Sketch</li>
-                            <li>Strong portfolio showcasing design work</li>
-                            <li>Understanding of user-centered design principles</li>
-                        </ul>
-                    </div>
-                    <div class="position-footer">
-                        <div class="position-salary">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>3-6 LPA</span>
-                        </div>
-                        <a href="contact.html" class="btn btn-primary">Apply Now</a>
-                    </div>
-                </div>
-
-                <div class="position-card">
-                    <div class="position-header">
-                        <div>
-                            <h3>Technical Support Engineer</h3>
-                            <div class="position-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Aurangabad, Maharashtra</span>
-                                <span><i class="fas fa-briefcase"></i> Full-time</span>
-                                <span><i class="fas fa-clock"></i> Posted 3 days ago</span>
-                            </div>
-                        </div>
-                        <span class="position-badge">New</span>
-                    </div>
-                    <p class="position-description">Provide technical support to our clients and help them get the most out of our software products.</p>
-                    <div class="position-requirements">
-                        <h4>Requirements:</h4>
-                        <ul>
-                            <li>2+ years of technical support experience</li>
-                            <li>Good knowledge of Windows and networking</li>
-                            <li>Excellent communication and problem-solving skills</li>
-                            <li>Willingness to work in shifts for 24/7 support</li>
-                        </ul>
-                    </div>
-                    <div class="position-footer">
-                        <div class="position-salary">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>2-4 LPA</span>
-                        </div>
-                        <a href="contact.html" class="btn btn-primary">Apply Now</a>
-                    </div>
-                </div>
-
-                <div class="position-card">
-                    <div class="position-header">
-                        <div>
-                            <h3>Business Development Executive</h3>
-                            <div class="position-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Aurangabad, Maharashtra</span>
-                                <span><i class="fas fa-briefcase"></i> Full-time</span>
-                                <span><i class="fas fa-clock"></i> Posted 5 days ago</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="position-description">Drive business growth by identifying new opportunities and building relationships with potential clients.</p>
-                    <div class="position-requirements">
-                        <h4>Requirements:</h4>
-                        <ul>
-                            <li>2+ years of sales or business development experience</li>
-                            <li>Strong communication and negotiation skills</li>
-                            <li>Knowledge of software products is a plus</li>
-                            <li>Self-motivated with a results-driven approach</li>
-                        </ul>
-                    </div>
-                    <div class="position-footer">
-                        <div class="position-salary">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>3-6 LPA + Incentives</span>
-                        </div>
-                        <a href="contact.html" class="btn btn-primary">Apply Now</a>
-                    </div>
+                <!-- Job positions will be loaded dynamically from the backend -->
+                <div style="text-align: center; padding: 60px; color: #7f8c8d;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 48px; margin-bottom: 20px;"></i>
+                    <p style="font-size: 18px;">Loading job openings...</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Job Application Modal -->
+    <div class="modal" id="applicationModal" style="display:none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #fff; width: 100%; max-width: 620px; border-radius: 10px; max-height: 90vh; overflow-y: auto; padding: 24px;">
+            <h3 style="margin-bottom: 6px;">Apply For Position</h3>
+            <p id="applicationJobTitle" style="color:#7f8c8d; margin-bottom: 18px;"></p>
+            <form id="applicationForm">
+                <input type="hidden" id="careerId" />
+
+                <div style="margin-bottom: 12px;">
+                    <label for="candidateName" style="display:block; margin-bottom: 6px; font-weight: 600;">Full Name *</label>
+                    <input id="candidateName" type="text" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;" />
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <label for="candidateEmail" style="display:block; margin-bottom: 6px; font-weight: 600;">Email *</label>
+                    <input id="candidateEmail" type="email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;" />
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <label for="candidatePhone" style="display:block; margin-bottom: 6px; font-weight: 600;">Phone</label>
+                    <input id="candidatePhone" type="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;" />
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <label for="candidateExperience" style="display:block; margin-bottom: 6px; font-weight: 600;">Years of Experience</label>
+                    <input id="candidateExperience" type="number" min="0" max="60" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;" />
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <label for="candidateLocation" style="display:block; margin-bottom: 6px; font-weight: 600;">Current Location</label>
+                    <input id="candidateLocation" type="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;" />
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <label for="resumeLink" style="display:block; margin-bottom: 6px; font-weight: 600;">Resume Link (Google Drive/Dropbox)</label>
+                    <input id="resumeLink" type="url" placeholder="https://..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;" />
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <label for="coverLetter" style="display:block; margin-bottom: 6px; font-weight: 600;">Cover Letter</label>
+                    <textarea id="coverLetter" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;"></textarea>
+                </div>
+
+                <div id="applicationMessage" style="display:none; margin: 10px 0; font-size: 14px;"></div>
+
+                <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px;">
+                    <button type="button" id="cancelApplicationBtn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" id="submitApplicationBtn" class="btn btn-primary">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Internship Program -->
     <section class="internship-program">
@@ -372,5 +309,6 @@
     </footer>
 
   <script src="js/script.js"></script>
+  <script src="js/careers.js"></script>
 </body>
 </html>
