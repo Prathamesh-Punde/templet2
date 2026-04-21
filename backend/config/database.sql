@@ -88,6 +88,23 @@ CREATE TABLE enquiries (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Sequence for auto-generated customer IDs
+CREATE SEQUENCE customer_id_seq START WITH 1000 INCREMENT BY 1;
+
+-- Create Customers table (managed by Super Admin)
+CREATE TABLE customers (
+  id SERIAL PRIMARY KEY,
+  customer_id VARCHAR(50) UNIQUE NOT NULL DEFAULT ('CUST-' || LPAD(nextval('customer_id_seq')::text, 6, '0')),
+  customer_name VARCHAR(100) NOT NULL,
+  product VARCHAR(150) NOT NULL,
+  mobile_no VARCHAR(20) NOT NULL,
+  purchase_date DATE NOT NULL,
+  notes TEXT,
+  created_by INTEGER REFERENCES users(id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create Support Ticket Responses table
 CREATE TABLE ticket_responses (
   id SERIAL PRIMARY KEY,
@@ -120,6 +137,8 @@ CREATE INDEX idx_support_tickets_status ON support_tickets(status);
 CREATE INDEX idx_support_tickets_assigned_to ON support_tickets(assigned_to);
 CREATE INDEX idx_enquiries_status ON enquiries(status);
 CREATE INDEX idx_enquiries_handled_by ON enquiries(handled_by);
+CREATE INDEX idx_customers_customer_id ON customers(customer_id);
+CREATE INDEX idx_customers_purchase_date ON customers(purchase_date);
 CREATE INDEX idx_ticket_responses_ticket_id ON ticket_responses(ticket_id);
 CREATE INDEX idx_activity_logs_user_id ON activity_logs(user_id);
 
@@ -146,6 +165,9 @@ CREATE TRIGGER update_support_tickets_updated_at BEFORE UPDATE ON support_ticket
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_enquiries_updated_at BEFORE UPDATE ON enquiries
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_customers_updated_at BEFORE UPDATE ON customers
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Insert default super admin user (password: admin123 - CHANGE THIS!)

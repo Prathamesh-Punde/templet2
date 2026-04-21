@@ -12,6 +12,7 @@ const careerRoutes = require('./routes/careerRoutes');
 const supportRoutes = require('./routes/supportRoutes');
 const enquiryRoutes = require('./routes/enquiryRoutes');
 const userRoutes = require('./routes/userRoutes');
+const customerRoutes = require('./routes/customerRoutes');
 const pool = require('./config/database');
 
 // Initialize express app
@@ -47,6 +48,7 @@ app.use('/api/careers', careerRoutes);
 app.use('/api/support', supportRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/customers', customerRoutes);
 
 // Always send /admin to the admin login page
 app.get(['/admin', '/admin/'], (req, res) => {
@@ -90,6 +92,7 @@ app.listen(PORT, async () => {
   try {
     await pool.query('SELECT 1');
     console.log('Database connection check: OK');
+    console.log('Server running on http://localhost:5000/');
   } catch (error) {
     console.error('Database connection check: FAILED', error.message);
   }

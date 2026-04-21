@@ -137,11 +137,57 @@ const supportTicketValidation = [
   handleValidationErrors
 ];
 
+// Customer create validation (Super Admin)
+const customerCreateValidation = [
+  body('customer_name')
+    .trim()
+    .notEmpty()
+    .withMessage('Customer name is required'),
+  body('product')
+    .trim()
+    .notEmpty()
+    .withMessage('Product is required'),
+  body('mobile_no')
+    .trim()
+    .notEmpty()
+    .withMessage('Mobile number is required'),
+  body('purchase_date')
+    .isISO8601()
+    .withMessage('Purchase date must be a valid date'),
+  handleValidationErrors
+];
+
+// Customer update validation (Super Admin)
+const customerUpdateValidation = [
+  body('customer_name')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Customer name is required'),
+  body('product')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Product is required'),
+  body('mobile_no')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Mobile number is required'),
+  body('purchase_date')
+    .optional()
+    .isISO8601()
+    .withMessage('Purchase date must be a valid date'),
+  handleValidationErrors
+];
+
 module.exports = {
   loginValidation,
   registerValidation,
   careerValidation,
   supportTicketValidation,
+  customerCreateValidation,
+  customerUpdateValidation,
   enquiryCreateValidation,
   enquiryUpdateValidation,
   handleValidationErrors
