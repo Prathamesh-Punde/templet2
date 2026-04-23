@@ -6,6 +6,45 @@
     <title>Support - Perfect Software Solutions</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .support-ticket {
+            background: linear-gradient(135deg, #0b1739 0%, #0d2456 55%, #17377d 100%);
+        }
+
+        .ticket-content {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .support-form-shell {
+            margin-top: 24px;
+            text-align: left;
+        }
+
+        .support-form-shell .contact-form-wrapper {
+            background: rgba(248, 250, 252, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .support-form-shell .btn-outline {
+            border-color: #7ea7ff;
+            color: #c9dcff;
+        }
+
+        .support-form-shell .btn-outline:hover {
+            background: #7ea7ff;
+            color: #0b1739;
+        }
+
+        #supportTicketMessage,
+        #trackTicketResult {
+            display: none;
+            margin-top: 14px;
+            font-weight: 600;
+            padding: 12px 14px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -81,20 +120,7 @@
                     <a href="mailto:uday_catuphale@yahoo.in" class="btn btn-outline">Send Email</a>
                 </div>
 
-                <div class="support-card">
-                    <div class="support-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h3>Live Chat</h3>
-                    <p>Chat with our support team</p>
-                    <div class="support-details">
-                        <p><strong>Available 24/7</strong></p>
-                        <p>Instant responses</p>
-                        <p>Screen sharing available</p>
-                    </div>
-                    <a href="#" class="btn btn-outline">Start Chat</a>
-                </div>
-
+              
                 <div class="support-card">
                     <div class="support-icon">
                         <i class="fas fa-video"></i>
@@ -112,192 +138,80 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="section-subtitle">Find quick answers to common questions</p>
-            </div>
-            <div class="faq-grid">
-                <div class="faq-category">
-                    <h3><i class="fas fa-shopping-cart"></i> Purchase & Licensing</h3>
-                    <div class="faq-items">
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>What is the pricing model for your software?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>We offer a one-time purchase model with lifetime updates. No recurring subscription fees. Prices vary based on the product and number of users. Contact us for a detailed quote.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>Do you offer free trials or demos?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes! We provide free demo sessions where our team will walk you through the features. You can also request a trial version for evaluation purposes.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>What payment methods do you accept?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>We accept bank transfers, UPI, credit/debit cards, and cheques. For enterprise customers, we also offer installment payment options.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-category">
-                    <h3><i class="fas fa-cog"></i> Installation & Setup</h3>
-                    <div class="faq-items">
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>How long does installation take?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Standard installation takes 1-2 hours. Our team will handle the complete setup including database configuration and initial data import.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>What are the system requirements?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Windows 7 or higher, 4GB RAM minimum (8GB recommended), 10GB free disk space, and an active internet connection for updates.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>Do you provide training for staff?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes! We provide comprehensive training for your staff including hands-on sessions, video tutorials, and user manuals.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-category">
-                    <h3><i class="fas fa-shield-alt"></i> Data & Security</h3>
-                    <div class="faq-items">
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>Is my data secure?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Absolutely! We use industry-standard encryption, secure databases, and regular backups. Your data is stored locally on your server for complete control.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>Do you provide data backup solutions?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes, we offer both automatic local backups and cloud backup options. You can schedule daily, weekly, or monthly backups.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>Can I migrate data from my existing system?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes! We assist with data migration from Excel, other billing software, or manual records. Our team ensures smooth transition with zero data loss.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-category">
-                    <h3><i class="fas fa-sync-alt"></i> Updates & Maintenance</h3>
-                    <div class="faq-items">
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>Are updates free?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>Yes! All software updates, bug fixes, and feature enhancements are included free for lifetime. We regularly release updates to improve functionality.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>What if I need customization?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>We offer customization services to tailor the software to your specific needs. Contact us with your requirements for a custom quote.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>How often do you release updates?</h4>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>We release minor updates monthly and major updates quarterly. Critical security patches are released immediately when needed.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Support Resources -->
-    <section class="support-resources">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Support Resources</h2>
-                <p class="section-subtitle">Self-help resources to get you started</p>
-            </div>
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <i class="fas fa-book"></i>
-                    <h4>User Manuals</h4>
-                    <p>Comprehensive documentation for all products</p>
-                    <a href="#">Browse Manuals <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="resource-card">
-                    <i class="fas fa-play-circle"></i>
-                    <h4>Video Tutorials</h4>
-                    <p>Step-by-step video guides</p>
-                    <a href="#">Watch Videos <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="resource-card">
-                    <i class="fas fa-question-circle"></i>
-                    <h4>Knowledge Base</h4>
-                    <p>Articles, tips, and troubleshooting guides</p>
-                    <a href="#">Visit KB <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="resource-card">
-                    <i class="fas fa-download"></i>
-                    <h4>Downloads</h4>
-                    <p>Software updates and utility tools</p>
-                    <a href="#">Download Center <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Support Ticket -->
     <section class="support-ticket">
         <div class="container">
             <div class="ticket-content">
                 <h2>Still Need Help?</h2>
-                <p>Submit a support ticket and our team will get back to you within 24 hours</p>
-                <a href="contact.html" class="btn btn-primary">Submit Support Ticket</a>
+                <p>Submit a support ticket with your software details and we will get back to you within 24 hours.</p>
+
+                <div class="support-form-shell">
+                    <div class="contact-form-wrapper">
+                        <form class="contact-form" id="supportTicketForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="support_name">Name <span class="required">*</span></label>
+                                    <input type="text" id="support_name" name="customer_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="support_mobile">Mobile Number <span class="required">*</span></label>
+                                    <input type="tel" id="support_mobile" name="customer_phone" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="support_email">Email <span class="required">*</span></label>
+                                    <input type="email" id="support_email" name="customer_email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="support_software">Name of Software <span class="required">*</span></label>
+                                    <input type="text" id="support_software" name="software_name" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="support_priority">Priority <span class="required">*</span></label>
+                                <select id="support_priority" name="priority" required>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="support_problem">Description of the Problem <span class="required">*</span></label>
+                                <textarea id="support_problem" name="problem_description" rows="5" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit Support Ticket</button>
+                        </form>
+
+                        <div id="supportTicketMessage"></div>
+
+                        <div style="margin-top: 20px;">
+                            <button type="button" class="btn btn-outline" id="toggleTrackTicketBtn">Track Existing Ticket</button>
+                        </div>
+
+                        <div id="trackTicketPanel" class="contact-form-wrapper" style="display: none; margin-top: 16px; padding: 1.5rem;">
+                            <form class="contact-form" id="trackTicketForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="tracking_id">Tracking ID <span class="required">*</span></label>
+                                        <input type="text" id="tracking_id" name="ticket_number" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tracking_mobile">Mobile Number <span class="required">*</span></label>
+                                        <input type="tel" id="tracking_mobile" name="mobile_no" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Check Status</button>
+                            </form>
+
+                            <div id="trackTicketResult"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .btn-primary { background: #3498db; color: white; }
+        .btn-success { background: #2ecc71; color: white; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn:hover { opacity: 0.9; }
+
+        .customers-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        th {
+            background: #34495e;
+            color: white;
+            font-weight: 600;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 520px;
+            width: 92%;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="action-bar">
+        <h2>Customers Management</h2>
+        <button class="btn btn-primary" id="addCustomerBtn">+ Add New Customer</button>
+    </div>
+
+    <div class="customers-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Product</th>
+                    <th>Mobile</th>
+                    <th>Purchase Date</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="customersTableBody">
+                <tr>
+                    <td colspan="7" class="empty-state">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" id="customerModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Add New Customer</h3>
+            <form id="customerForm">
+                <input type="hidden" id="customerRowId">
+
+                <div class="form-group">
+                    <label for="customer_id">Customer ID (Auto Generated)</label>
+                    <input type="text" id="customer_id" readonly placeholder="Will be generated automatically">
+                </div>
+
+                <div class="form-group">
+                    <label for="customer_name">Name *</label>
+                    <input type="text" id="customer_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="product">Product *</label>
+                    <input type="text" id="product" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile_no">Mobile Number *</label>
+                    <input type="text" id="mobile_no" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="purchase_date">Date of Purchase *</label>
+                    <input type="date" id="purchase_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" placeholder="Optional remarks"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-danger" id="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/admin/admin-customers.js"></script>
+</body>
+</html>

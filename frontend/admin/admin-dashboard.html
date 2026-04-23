@@ -60,10 +60,23 @@
 
         .nav-menu {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-menu.super-admin-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
         }
 
         .nav-menu li {
-            margin-bottom: 10px;
+            margin-bottom: 0;
+        }
+
+        .nav-menu.super-admin-grid li.full-width {
+            grid-column: 1 / -1;
         }
 
         .nav-menu a {
@@ -78,6 +91,10 @@
         .nav-menu a:hover,
         .nav-menu a.active {
             background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu.super-admin-grid a {
+            text-align: center;
         }
 
         .logout-btn {
@@ -208,9 +225,10 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#" data-section="dashboard" class="active">Dashboard</a></li>
                 <li id="careersNav" style="display: none;"><a href="#" data-section="careers">Careers</a></li>
-                <li id="supportNav" style="display: none;"><a href="#" data-section="support">Support Tickets</a></li>
                 <li id="enquiriesNav" style="display: none;"><a href="#" data-section="enquiries">Enquiries</a></li>
-                <li id="usersNav" style="display: none;"><a href="#" data-section="users">Users</a></li>
+                <li id="supportNav" style="display: none;"><a href="#" data-section="support">Support Tickets</a></li>
+                <li id="customersNav" class="full-width" style="display: none;"><a href="#" data-section="customers">Customers</a></li>
+                <li id="usersNav" class="full-width" style="display: none;"><a href="#" data-section="users">Users</a></li>
             </ul>
             
             <button class="logout-btn" id="logoutBtn">Logout</button>
@@ -252,12 +270,17 @@
             </div>
             
             <!-- Users Section -->
+            <div id="customers" class="content-section">
+                <iframe src="admin-customers.html" style="width: 100%; min-height: 800px; border: none;"></iframe>
+            </div>
+
+            <!-- Users Section -->
             <div id="users" class="content-section">
                 <iframe id="usersFrame" src="admin-users.html" style="width: 100%; min-height: 800px; border: none;"></iframe>
             </div>
         </main>
     </div>
 
-    <script src="../js/admin-dashboard.js"></script>
+    <script src="../js/admin-dashboard.js?v=20260421-1"></script>
 </body>
 </html>

@@ -74,7 +74,15 @@ class SupportController {
   // Create new support ticket (public endpoint)
   static async create(req, res) {
     try {
-      const ticketData = req.body;
+      const ticketData = {
+        customer_name: req.body.customer_name,
+        customer_email: req.body.customer_email,
+        customer_phone: req.body.customer_phone,
+        subject: req.body.software_name || req.body.subject,
+        message: req.body.problem_description || req.body.message,
+        priority: req.body.priority
+      };
+
       const ticket = await Support.create(ticketData);
 
       res.status(201).json({
@@ -86,6 +94,78 @@ class SupportController {
       res.status(500).json({ 
         error: 'Internal Server Error',
         message: 'Failed to create ticket' 
+      });
+    }
+  }
+
+  // Public endpoint: track ticket by tracking ID and mobile number
+  static async trackTicket(req, res) {
+    try {
+      const { ticket_number, mobile_no } = req.body;
+
+      if (!ticket_number || !String(ticket_number).trim()) {
+        return res.status(400).json({
+          error: 'Validation Failed',
+          message: 'Tracking ID is required'
+        });
+      }
+
+      if (!mobile_no || !String(mobile_no).trim()) {
+        return res.status(400).json({
+          error: 'Validation Failed',
+          message: 'Mobile number is required'
+        });
+      }
+
+      const normalizedTicketNumber = ticket_number.trim();
+      const normalizedMobile = mobile_no.trim();
+
+      const ticket = await Support.findByTrackingNumber(normalizedTicketNumber);
+
+      if (!ticket) {
+        return res.status(404).json({
+          error: 'Not Found',
+          message: 'Tracking ID not found'
+        });
+      }
+
+      const isRegisteredCustomer = await Support.isCustomerMobileRegistered(normalizedMobile);
+      if (!isRegisteredCustomer) {
+        return res.status(404).json({
+          error: 'Not Found',
+          message: 'Mobile number is not registered in our customer records'
+        });
+      }
+
+      const phoneMatches =
+        String(ticket.customer_phone || '').replace(/\D/g, '') ===
+        normalizedMobile.replace(/\D/g, '');
+
+      if (!phoneMatches) {
+        return res.status(403).json({
+          error: 'Forbidden',
+          message: 'Mobile number does not match this tracking ID'
+        });
+      }
+
+      res.json({
+        message: 'Ticket found',
+        ticket: {
+          ticket_number: ticket.ticket_number,
+          customer_name: ticket.customer_name,
+          subject: ticket.subject,
+          status: ticket.status,
+          priority: ticket.priority,
+          created_at: ticket.created_at,
+          updated_at: ticket.updated_at,
+          resolved_at: ticket.resolved_at
+        }
+      });
+    } catch (error) {
+      console.error('Track ticket error:', error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'Failed to track ticket'
       });
     }
   }

@@ -18,7 +18,21 @@ function getStoredUser() {
 
 // Check authentication
 const token = localStorage.getItem('token');
-const user = getStoredUser();
+let user = getStoredUser();
+
+function normalizeRole(role) {
+    return String(role || '').trim().toLowerCase().replace(/[\s-]+/g, '_');
+}
+
+function hasAnyRole(...allowedRoles) {
+    const currentRole = normalizeRole(user && user.role);
+    return allowedRoles.some((role) => normalizeRole(role) === currentRole);
+}
+
+function isSuperAdminRole() {
+    const currentRole = normalizeRole(user && user.role);
+    return currentRole === 'super_admin' || currentRole.includes('super_admin') || currentRole.includes('superadmin');
+}
 
 if (!token || !user) {
     clearSessionAndRedirect();
@@ -26,31 +40,61 @@ if (!token || !user) {
 }
 
 // Set user info
-document.getElementById('userName').textContent = user.username;
-document.getElementById('userEmail').textContent = user.email;
-document.getElementById('userRole').textContent = user.role.replace('_', ' ').toUpperCase();
+function updateUserHeader() {
+    document.getElementById('userName').textContent = user.username;
+    document.getElementById('userEmail').textContent = user.email;
+    document.getElementById('userRole').textContent = String(user.role || '').replace(/_/g, ' ').toUpperCase();
+}
+
+async function syncUserProfile() {
+    try {
+        const response = await fetch(`${API_URL}/auth/profile`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            return;
+        }
+
+        const data = await response.json();
+        if (data && data.user) {
+            user = data.user;
+            localStorage.setItem('user', JSON.stringify(data.user));
+        }
+    } catch (error) {
+        console.error('Unable to sync profile:', error);
+    }
+}
 
 // Show/hide navigation based on role
 function setupNavigation() {
+    const navMenu = document.getElementById('navMenu');
     const careersNav = document.getElementById('careersNav');
     const supportNav = document.getElementById('supportNav');
     const enquiriesNav = document.getElementById('enquiriesNav');
+    const customersNav = document.getElementById('customersNav');
     const usersNav = document.getElementById('usersNav');
     const superAdminQuickActions = document.getElementById('superAdminQuickActions');
-    
-    if (user.role === 'super_admin') {
-        careersNav.style.display = 'block';
-        supportNav.style.display = 'block';
-        enquiriesNav.style.display = 'block';
-        usersNav.style.display = 'block';
-        superAdminQuickActions.style.display = 'flex';
-    } else if (user.role === 'hr') {
-        careersNav.style.display = 'block';
-    } else if (user.role === 'customer_support') {
-        supportNav.style.display = 'block';
-    } else if (user.role === 'enquiry_follow_up_executive') {
-        enquiriesNav.style.display = 'block';
+
+    const isSuperAdmin = isSuperAdminRole();
+    const canViewCareers = hasAnyRole('hr', 'super_admin') || isSuperAdmin;
+    const canViewSupport = hasAnyRole('customer_support', 'super_admin') || isSuperAdmin;
+    const canViewEnquiries = hasAnyRole('enquiry_follow_up_executive', 'super_admin') || isSuperAdmin;
+
+    if (isSuperAdmin) {
+        navMenu.classList.add('super-admin-grid');
+    } else {
+        navMenu.classList.remove('super-admin-grid');
     }
+
+    careersNav.style.display = canViewCareers ? 'block' : 'none';
+    supportNav.style.display = canViewSupport ? 'block' : 'none';
+    enquiriesNav.style.display = canViewEnquiries ? 'block' : 'none';
+    customersNav.style.display = isSuperAdmin ? 'block' : 'none';
+    usersNav.style.display = isSuperAdmin ? 'block' : 'none';
+    superAdminQuickActions.style.display = isSuperAdmin ? 'flex' : 'none';
 }
 
 function openAddUserFromDashboard() {
@@ -76,7 +120,7 @@ async function loadStatistics() {
     statsGrid.innerHTML = '';
     
     try {
-        if (user.role === 'hr' || user.role === 'super_admin') {
+        if (hasAnyRole('hr', 'super_admin')) {
             const response = await fetch(`${API_URL}/careers`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -98,7 +142,7 @@ async function loadStatistics() {
             `;
         }
         
-        if (user.role === 'customer_support' || user.role === 'super_admin') {
+        if (hasAnyRole('customer_support', 'super_admin')) {
             const response = await fetch(`${API_URL}/support/tickets/statistics`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -127,7 +171,7 @@ async function loadStatistics() {
             `;
         }
 
-        if (user.role === 'enquiry_follow_up_executive' || user.role === 'super_admin') {
+        if (hasAnyRole('enquiry_follow_up_executive', 'super_admin')) {
             const response = await fetch(`${API_URL}/enquiries/statistics`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -160,18 +204,29 @@ async function loadStatistics() {
             `;
         }
         
-        if (user.role === 'super_admin') {
+        if (hasAnyRole('super_admin')) {
             const response = await fetch(`${API_URL}/users`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
             const data = await response.json();
+
+            const customersResponse = await fetch(`${API_URL}/customers`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const customersData = await customersResponse.json();
             
             statsGrid.innerHTML += `
                 <div class="stat-card">
                     <h3>Total Users</h3>
                     <div class="number">${data.count}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Customers</h3>
+                    <div class="number">${customersData.count || 0}</div>
                 </div>
             `;
         }
@@ -224,5 +279,13 @@ if (quickAddUserBtn) {
 }
 
 // Initialize
-setupNavigation();
-loadStatistics();
+async function initializeDashboard() {
+    await syncUserProfile();
+    updateUserHeader();
+    setupNavigation();
+    // Re-apply once more after initial render to override any stale inline styles.
+    setTimeout(setupNavigation, 0);
+    loadStatistics();
+}
+
+initializeDashboard();

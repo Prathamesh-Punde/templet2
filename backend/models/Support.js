@@ -1,29 +1,42 @@
 const pool = require('../config/database');
+const crypto = require('crypto');
 
 class Support {
   // Generate unique ticket number
   static generateTicketNumber() {
-    const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 1000);
-    return `TKT-${timestamp}-${random}`;
+    const datePart = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const randomPart = crypto.randomBytes(3).toString('hex').toUpperCase();
+    return `TKT-${datePart}-${randomPart}`;
   }
 
   // Create new support ticket
   static async create(ticketData) {
     const { customer_name, customer_email, customer_phone, subject, message, priority } = ticketData;
-    const ticket_number = this.generateTicketNumber();
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const ticket_number = this.generateTicketNumber();
 
-    const result = await pool.query(
-      `INSERT INTO support_tickets (
-        ticket_number, customer_name, customer_email, customer_phone, 
-        subject, message, priority, status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
-      RETURNING *`,
-      [ticket_number, customer_name, customer_email, customer_phone, 
-       subject, message, priority || 'medium', 'pending']
-    );
+      try {
+        const result = await pool.query(
+          `INSERT INTO support_tickets (
+            ticket_number, customer_name, customer_email, customer_phone, 
+            subject, message, priority, status
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+          RETURNING *`,
+          [ticket_number, customer_name, customer_email, customer_phone,
+           subject, message, priority || 'medium', 'pending']
+        );
 
-    return result.rows[0];
+        return result.rows[0];
+      } catch (error) {
+        if (error.code === '23505' && attempt < 4) {
+          continue;
+        }
+
+        throw error;
+      }
+    }
+
+    throw new Error('Unable to generate unique ticket number');
   }
 
   // Get all support tickets
@@ -81,6 +94,27 @@ class Support {
        WHERE st.id = $1`,
       [id]
     );
+    return result.rows[0];
+  }
+
+  // Public tracking lookup by ticket number + mobile number.
+  // Mobile must exist in customers table and match ticket customer phone.
+  static async findByTrackingAndMobile(ticketNumber, mobileNo) {
+    const result = await pool.query(
+      `SELECT st.ticket_number, st.customer_name, st.subject, st.status, st.priority,
+              st.created_at, st.updated_at, st.resolved_at
+       FROM support_tickets st
+       WHERE st.ticket_number = $1
+         AND regexp_replace(COALESCE(st.customer_phone, ''), '\\D', '', 'g') = regexp_replace($2, '\\D', '', 'g')
+         AND EXISTS (
+           SELECT 1
+           FROM customers c
+           WHERE regexp_replace(COALESCE(c.mobile_no, ''), '\\D', '', 'g') = regexp_replace($2, '\\D', '', 'g')
+         )
+       LIMIT 1`,
+      [ticketNumber, mobileNo]
+    );
+
     return result.rows[0];
   }
 
@@ -172,6 +206,33 @@ class Support {
       FROM support_tickets
     `);
     return result.rows[0];
+  }
+
+  // Get ticket by tracking number for public tracking workflow.
+  static async findByTrackingNumber(ticketNumber) {
+    const result = await pool.query(
+      `SELECT st.ticket_number, st.customer_name, st.customer_phone, st.subject, st.status,
+              st.priority, st.created_at, st.updated_at, st.resolved_at
+       FROM support_tickets st
+       WHERE st.ticket_number = $1
+       LIMIT 1`,
+      [ticketNumber]
+    );
+
+    return result.rows[0];
+  }
+
+  // Check whether mobile number exists in customers table.
+  static async isCustomerMobileRegistered(mobileNo) {
+    const result = await pool.query(
+      `SELECT 1
+       FROM customers c
+       WHERE regexp_replace(COALESCE(c.mobile_no, ''), '\\D', '', 'g') = regexp_replace($1, '\\D', '', 'g')
+       LIMIT 1`,
+      [mobileNo]
+    );
+
+    return result.rowCount > 0;
   }
 }
 

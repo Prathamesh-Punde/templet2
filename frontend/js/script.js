@@ -157,8 +157,8 @@ document.querySelectorAll('.product-card').forEach((card, index) => {
     observer.observe(card);
 });
 
-// Contact form submission (will be used on contact.html page)
-const contactForm = document.querySelector('.contact-form');
+// Contact form submission (used on contact.html page only)
+const contactForm = document.getElementById('contactEnquiryForm');
 
 if (contactForm) {
     // Pre-select service from URL parameter
@@ -211,6 +211,117 @@ if (contactForm) {
                 console.error('Contact form submission error:', error);
                 alert(error.message || 'Unable to submit enquiry right now.');
             });
+    });
+}
+
+// Support ticket form submission (used on support.html page)
+const supportTicketForm = document.getElementById('supportTicketForm');
+if (supportTicketForm) {
+    supportTicketForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(supportTicketForm);
+        const payload = {
+            customer_name: formData.get('customer_name')?.trim(),
+            customer_phone: formData.get('customer_phone')?.trim(),
+            customer_email: formData.get('customer_email')?.trim(),
+            software_name: formData.get('software_name')?.trim(),
+            problem_description: formData.get('problem_description')?.trim(),
+            priority: formData.get('priority')?.trim() || 'medium'
+        };
+
+        const messageBox = document.getElementById('supportTicketMessage');
+
+        try {
+            const response = await fetch('/api/support/tickets/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to submit support ticket');
+            }
+
+            messageBox.style.display = 'block';
+            messageBox.style.color = '#155724';
+            messageBox.textContent = `Support ticket submitted successfully. Your Tracking ID is ${data.ticket.ticket_number}`;
+            supportTicketForm.reset();
+        } catch (error) {
+            console.error('Support ticket submission error:', error);
+            if (messageBox) {
+                messageBox.style.display = 'block';
+                messageBox.style.color = '#b02a37';
+                messageBox.textContent = error.message || 'Unable to submit support ticket right now.';
+            } else {
+                alert(error.message || 'Unable to submit support ticket right now.');
+            }
+        }
+    });
+}
+
+// Ticket tracking (used on support.html page)
+const toggleTrackTicketBtn = document.getElementById('toggleTrackTicketBtn');
+const trackTicketPanel = document.getElementById('trackTicketPanel');
+const trackTicketForm = document.getElementById('trackTicketForm');
+
+if (toggleTrackTicketBtn && trackTicketPanel) {
+    toggleTrackTicketBtn.addEventListener('click', () => {
+        const isHidden = trackTicketPanel.style.display === 'none' || !trackTicketPanel.style.display;
+        trackTicketPanel.style.display = isHidden ? 'block' : 'none';
+    });
+}
+
+if (trackTicketForm) {
+    trackTicketForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(trackTicketForm);
+        const payload = {
+            ticket_number: formData.get('ticket_number')?.trim(),
+            mobile_no: formData.get('mobile_no')?.trim()
+        };
+
+        const resultBox = document.getElementById('trackTicketResult');
+
+        try {
+            const response = await fetch('/api/support/tickets/track', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to track ticket');
+            }
+
+            const ticket = data.ticket;
+            resultBox.style.display = 'block';
+            resultBox.style.color = '#155724';
+            resultBox.style.background = '#d4edda';
+            resultBox.style.padding = '12px 14px';
+            resultBox.style.borderRadius = '6px';
+            resultBox.innerHTML = `
+                <strong>Status:</strong> ${String(ticket.status || '').replace(/_/g, ' ').toUpperCase()}<br>
+                <strong>Tracking ID:</strong> ${ticket.ticket_number}<br>
+                <strong>Software:</strong> ${ticket.subject}
+            `;
+        } catch (error) {
+            console.error('Track ticket error:', error);
+            resultBox.style.display = 'block';
+            resultBox.style.color = '#721c24';
+            resultBox.style.background = '#f8d7da';
+            resultBox.style.padding = '12px 14px';
+            resultBox.style.borderRadius = '6px';
+            resultBox.textContent = error.message || 'Unable to fetch ticket status.';
+        }
     });
 }
 

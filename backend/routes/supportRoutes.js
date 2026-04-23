@@ -7,6 +7,7 @@ const { supportTicketValidation } = require('../middleware/validation');
 
 // Public routes - anyone can create a support ticket
 router.post('/tickets/create', supportTicketValidation, SupportController.create);
+router.post('/tickets/track', SupportController.trackTicket);
 
 // Protected routes - Customer Support and Super Admin only
 router.get('/tickets', authenticate, authorize('customer_support', 'super_admin'), SupportController.getAll);

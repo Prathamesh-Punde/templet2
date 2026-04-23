@@ -123,17 +123,43 @@ const supportTicketValidation = [
     .trim()
     .notEmpty()
     .withMessage('Customer name is required'),
+  body('customer_phone')
+    .trim()
+    .notEmpty()
+    .withMessage('Mobile number is required'),
   body('customer_email')
     .isEmail()
     .withMessage('Please provide a valid email'),
+  body('software_name')
+    .optional({ nullable: true })
+    .trim(),
   body('subject')
-    .trim()
-    .notEmpty()
-    .withMessage('Subject is required'),
+    .optional({ nullable: true })
+    .trim(),
+  body('problem_description')
+    .optional({ nullable: true })
+    .trim(),
   body('message')
-    .trim()
-    .notEmpty()
-    .withMessage('Message is required'),
+    .optional({ nullable: true })
+    .trim(),
+  body().custom((value, { req }) => {
+    const softwareName = req.body.software_name || req.body.subject;
+    const problemDescription = req.body.problem_description || req.body.message;
+
+    if (!softwareName || !String(softwareName).trim()) {
+      throw new Error('Software name is required');
+    }
+
+    if (!problemDescription || !String(problemDescription).trim()) {
+      throw new Error('Problem description is required');
+    }
+
+    return true;
+  }),
+  body('priority')
+    .optional()
+    .isIn(['high', 'medium', 'low'])
+    .withMessage('Priority must be high, medium, or low'),
   handleValidationErrors
 ];
 

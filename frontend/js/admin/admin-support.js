@@ -1,7 +1,7 @@
 // API Configuration
 const API_URL = '/api';
 const token = localStorage.getItem('token');
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user') || 'null');
 
 let currentTicketId = null;
 
@@ -82,6 +82,10 @@ async function viewTicket(id) {
                 <span class="detail-label">Customer:</span>
                 <span>${ticket.customer_name} (${ticket.customer_email})</span>
             </div>
+            <div class="detail-row">
+                <span class="detail-label">Software:</span>
+                <span>${ticket.subject}</span>
+            </div>
             ${ticket.customer_phone ? `
                 <div class="detail-row">
                     <span class="detail-label">Phone:</span>
@@ -132,6 +136,10 @@ async function viewTicket(id) {
         // Update button states
         document.getElementById('assignToMeBtn').disabled = ticket.status === 'resolved';
         document.getElementById('resolveBtn').disabled = ticket.status === 'resolved';
+        const deleteTicketBtn = document.getElementById('deleteTicketBtn');
+        if (deleteTicketBtn) {
+            deleteTicketBtn.style.display = user && user.role === 'super_admin' ? 'inline-block' : 'none';
+        }
         
         document.getElementById('ticketModal').classList.add('show');
     } catch (error) {
@@ -190,6 +198,38 @@ document.getElementById('resolveBtn').addEventListener('click', async () => {
         }
     } catch (error) {
         console.error('Error resolving ticket:', error);
+        alert('Network error. Please try again.');
+    }
+});
+
+// Delete ticket (super admin only)
+document.getElementById('deleteTicketBtn').addEventListener('click', async () => {
+    if (!currentTicketId) {
+        return;
+    }
+
+    if (!confirm('Are you sure you want to permanently delete this ticket?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/support/tickets/${currentTicketId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            alert('Ticket deleted successfully!');
+            document.getElementById('ticketModal').classList.remove('show');
+            loadTickets();
+        } else {
+            const error = await response.json();
+            alert('Error: ' + (error.message || 'Delete failed'));
+        }
+    } catch (error) {
+        console.error('Error deleting ticket:', error);
         alert('Network error. Please try again.');
     }
 });
