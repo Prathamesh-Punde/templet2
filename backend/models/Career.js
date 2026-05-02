@@ -2,6 +2,7 @@ const pool = require('../config/database');
 
 class Career {
   // Create new career posting
+  // Insert a new career posting and link it to the creating admin.
   static async create(careerData, userId) {
     const { 
       job_title, department, location, employment_type, 
@@ -22,6 +23,7 @@ class Career {
   }
 
   // Get all career postings
+  // Fetch career postings with optional filters and creator name.
   static async findAll(filters = {}) {
     let query = `
       SELECT c.*, u.username as created_by_name 
@@ -56,6 +58,7 @@ class Career {
   }
 
   // Get career by ID
+  // Fetch one career posting with creator information.
   static async findById(id) {
     const result = await pool.query(
       `SELECT c.*, u.username as created_by_name 
@@ -68,6 +71,7 @@ class Career {
   }
 
   // Update career posting
+  // Update editable fields for a career posting.
   static async update(id, careerData) {
     const { 
       job_title, department, location, employment_type, 
@@ -94,6 +98,7 @@ class Career {
   }
 
   // Delete career posting
+  // Remove a career posting permanently.
   static async delete(id) {
     const result = await pool.query(
       'DELETE FROM careers WHERE id = $1 RETURNING id',
@@ -103,6 +108,7 @@ class Career {
   }
 
   // Get active career postings for public view
+  // Return only active careers for the public website.
   static async findActive() {
     const result = await pool.query(
       `SELECT id, job_title, department, location, employment_type, 
@@ -115,6 +121,7 @@ class Career {
   }
 
   // Create new career application from public careers page
+  // Save a candidate application for a selected career.
   static async createApplication(applicationData) {
     const {
       career_id,
@@ -149,6 +156,7 @@ class Career {
   }
 
   // Get all applications for admin panel
+  // Fetch applications with career details for HR/admin review.
   static async findApplications(filters = {}) {
     let query = `
       SELECT 
@@ -187,6 +195,7 @@ class Career {
   }
 
   // Update application status from admin panel
+  // Change the review status of a career application.
   static async updateApplicationStatus(id, status) {
     const result = await pool.query(
       `UPDATE career_applications
@@ -200,6 +209,7 @@ class Career {
   }
 
   // Delete application from admin panel
+  // Remove a rejected career application.
   static async deleteApplication(id) {
     const result = await pool.query(
       'DELETE FROM career_applications WHERE id = $1 RETURNING id',

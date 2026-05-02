@@ -1,6 +1,7 @@
 const pool = require('../config/database');
 
 class Customer {
+  // Insert a new customer record and link it to the creator.
   static async create(customerData, userId) {
     const {
       customer_name,
@@ -28,6 +29,7 @@ class Customer {
     return result.rows[0];
   }
 
+  // Fetch customers with optional filtering by product or name.
   static async findAll(filters = {}) {
     let query = `
       SELECT c.*, u.username AS created_by_name
@@ -61,6 +63,7 @@ class Customer {
     return result.rows;
   }
 
+  // Fetch one customer record with creator information.
   static async findById(id) {
     const result = await pool.query(
       `SELECT c.*, u.username AS created_by_name
@@ -73,6 +76,7 @@ class Customer {
     return result.rows[0];
   }
 
+  // Update customer details except the auto-generated customer ID.
   static async update(id, customerData) {
     const {
       customer_name,
@@ -104,6 +108,7 @@ class Customer {
     return result.rows[0];
   }
 
+  // Delete a customer record permanently.
   static async delete(id) {
     const result = await pool.query(
       'DELETE FROM customers WHERE id = $1 RETURNING id',

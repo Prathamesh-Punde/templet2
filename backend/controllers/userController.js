@@ -2,6 +2,7 @@ const User = require('../models/User');
 
 class UserController {
   // Get all users
+  // Return every admin user for the super admin panel.
   static async getAll(req, res) {
     try {
       const users = await User.findAll();
@@ -19,6 +20,7 @@ class UserController {
   }
 
   // Get user by ID
+  // Return a single admin user by ID.
   static async getById(req, res) {
     try {
       const { id } = req.params;
@@ -42,6 +44,7 @@ class UserController {
   }
 
   // Update user
+  // Update an admin user's profile or role.
   static async update(req, res) {
     try {
       const { id } = req.params;
@@ -70,6 +73,7 @@ class UserController {
   }
 
   // Delete user
+  // Delete an admin user, except the currently logged-in user.
   static async delete(req, res) {
     try {
       const { id } = req.params;

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 class User {
   // Create new user
+  // Insert a new admin user with a hashed password.
   static async create(userData) {
     const { username, email, password, role } = userData;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -18,6 +19,7 @@ class User {
   }
 
   // Find user by email
+  // Look up a user account by email address.
   static async findByEmail(email) {
     const result = await pool.query(
       'SELECT * FROM users WHERE email = $1',
@@ -27,6 +29,7 @@ class User {
   }
 
   // Find user by ID
+  // Look up a user account by primary key.
   static async findById(id) {
     const result = await pool.query(
       'SELECT id, username, email, role, is_active, created_at FROM users WHERE id = $1',
@@ -36,6 +39,7 @@ class User {
   }
 
   // Get all users
+  // Return all admin users for the super admin panel.
   static async findAll() {
     const result = await pool.query(
       'SELECT id, username, email, role, is_active, created_at FROM users ORDER BY created_at DESC'
@@ -44,6 +48,7 @@ class User {
   }
 
   // Update user
+  // Update editable user fields such as username, email, role, and status.
   static async update(id, userData) {
     const { username, email, role, is_active } = userData;
     const result = await pool.query(
@@ -60,6 +65,7 @@ class User {
   }
 
   // Update password
+  // Replace a user's password with a newly hashed value.
   static async updatePassword(id, newPassword) {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await pool.query(
@@ -69,6 +75,7 @@ class User {
   }
 
   // Delete user
+  // Delete a user record from the database.
   static async delete(id) {
     const result = await pool.query(
       'DELETE FROM users WHERE id = $1 RETURNING id',
@@ -78,6 +85,7 @@ class User {
   }
 
   // Verify password
+  // Compare a plain password against its bcrypt hash.
   static async verifyPassword(plainPassword, hashedPassword) {
     return await bcrypt.compare(plainPassword, hashedPassword);
   }

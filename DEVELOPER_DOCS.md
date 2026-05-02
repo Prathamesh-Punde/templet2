@@ -358,5 +358,3 @@ Visibility is role-driven in `frontend/js/admin-dashboard.js`.
 - Add admin audit logs UI
 - Add CI lint + type checks
 
----
-Maintainer note: update this file whenever routes, role rules, schema, or critical frontend flows change.

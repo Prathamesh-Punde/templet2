@@ -1,6 +1,7 @@
 const Enquiry = require('../models/Enquiry');
 
 class EnquiryController {
+  // Create a new enquiry from the public contact form.
   static async create(req, res) {
     try {
       const { name, email, phone, subject, service, message } = req.body;
@@ -34,6 +35,7 @@ class EnquiryController {
     }
   }
 
+  // Return all enquiries, optionally filtered by status or handler.
   static async getAll(req, res) {
     try {
       const { status, handled_by } = req.query;
@@ -61,6 +63,7 @@ class EnquiryController {
     }
   }
 
+  // Return a single enquiry by ID.
   static async getById(req, res) {
     try {
       const { id } = req.params;
@@ -83,6 +86,7 @@ class EnquiryController {
     }
   }
 
+  // Update enquiry follow-up details such as call time, comments, and status.
   static async update(req, res) {
     try {
       const { id } = req.params;
@@ -130,6 +134,7 @@ class EnquiryController {
     }
   }
 
+  // Permanently delete an enquiry.
   static async delete(req, res) {
     try {
       const { id } = req.params;
@@ -155,6 +160,7 @@ class EnquiryController {
     }
   }
 
+  // Return enquiry counts for the enquiry dashboard cards.
   static async getStatistics(req, res) {
     try {
       const statistics = await Enquiry.getStatistics();

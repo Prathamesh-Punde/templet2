@@ -1,7 +1,7 @@
 const Career = require('../models/Career');
 
 class CareerController {
-  // Get all careers
+  // Return all career postings, optionally filtered by active state or department.
   static async getAll(req, res) {
     try {
       const { is_active, department } = req.query;
@@ -28,7 +28,7 @@ class CareerController {
     }
   }
 
-  // Get active careers for public view
+  // Return only active career postings for the public website.
   static async getActive(req, res) {
     try {
       const careers = await Career.findActive();
@@ -45,7 +45,7 @@ class CareerController {
     }
   }
 
-  // Get career by ID
+  // Return a single career posting by its ID.
   static async getById(req, res) {
     try {
       const { id } = req.params;
@@ -68,7 +68,7 @@ class CareerController {
     }
   }
 
-  // Create new career
+  // Create a new career posting and store the creating user's ID.
   static async create(req, res) {
     try {
       const careerData = req.body;
@@ -87,7 +87,7 @@ class CareerController {
     }
   }
 
-  // Update career
+  // Update an existing career posting.
   static async update(req, res) {
     try {
       const { id } = req.params;
@@ -115,7 +115,7 @@ class CareerController {
     }
   }
 
-  // Delete career
+  // Delete a career posting by ID.
   static async delete(req, res) {
     try {
       const { id } = req.params;
@@ -141,7 +141,7 @@ class CareerController {
     }
   }
 
-  // Submit a public application for a career posting
+  // Save a public candidate application against a career posting.
   static async submitApplication(req, res) {
     try {
       const { id } = req.params;
@@ -194,7 +194,7 @@ class CareerController {
     }
   }
 
-  // Get all applications (HR and Super Admin)
+  // Return candidate applications for HR and super admin dashboards.
   static async getApplications(req, res) {
     try {
       const { status, career_id } = req.query;
@@ -223,7 +223,7 @@ class CareerController {
     }
   }
 
-  // Update application status (HR and Super Admin)
+  // Update the status of a candidate application.
   static async updateApplicationStatus(req, res) {
     try {
       const { id } = req.params;
@@ -258,7 +258,7 @@ class CareerController {
     }
   }
 
-  // Delete application after rejection (HR and Super Admin)
+  // Permanently delete a rejected candidate application.
   static async deleteApplication(req, res) {
     try {
       const { id } = req.params;

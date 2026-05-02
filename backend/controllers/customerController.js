@@ -1,6 +1,7 @@
 const Customer = require('../models/Customer');
 
 class CustomerController {
+  // Return all customers, optionally filtered by product or name.
   static async getAll(req, res) {
     try {
       const { product, customer_name } = req.query;
@@ -29,6 +30,7 @@ class CustomerController {
     }
   }
 
+  // Return a single customer by ID.
   static async getById(req, res) {
     try {
       const { id } = req.params;
@@ -51,6 +53,7 @@ class CustomerController {
     }
   }
 
+  // Create a new customer record with an auto-generated customer ID.
   static async create(req, res) {
     try {
       const customer = await Customer.create(req.body, req.user.id);
@@ -74,6 +77,7 @@ class CustomerController {
     }
   }
 
+  // Update an existing customer record.
   static async update(req, res) {
     try {
       const { id } = req.params;
@@ -105,6 +109,7 @@ class CustomerController {
     }
   }
 
+  // Permanently delete a customer record.
   static async delete(req, res) {
     try {
       const { id } = req.params;

@@ -1,7 +1,7 @@
 const Support = require('../models/Support');
 
 class SupportController {
-  // Get all support tickets
+  // Return all support tickets, optionally filtered by status, assignee, or priority.
   static async getAll(req, res) {
     try {
       const { status, assigned_to, priority } = req.query;
@@ -25,7 +25,7 @@ class SupportController {
     }
   }
 
-  // Get my assigned tickets
+  // Return support tickets assigned to the current logged-in user.
   static async getMyTickets(req, res) {
     try {
       const tickets = await Support.findAll({ assigned_to: req.user.id });
@@ -42,7 +42,7 @@ class SupportController {
     }
   }
 
-  // Get ticket by ID
+  // Return one support ticket and its response history.
   static async getById(req, res) {
     try {
       const { id } = req.params;
@@ -71,7 +71,7 @@ class SupportController {
     }
   }
 
-  // Create new support ticket (public endpoint)
+  // Create a public support ticket from the support form.
   static async create(req, res) {
     try {
       const ticketData = {
@@ -98,7 +98,7 @@ class SupportController {
     }
   }
 
-  // Public endpoint: track ticket by tracking ID and mobile number
+  // Track a support ticket using tracking ID and customer mobile number.
   static async trackTicket(req, res) {
     try {
       const { ticket_number, mobile_no } = req.body;
@@ -170,7 +170,7 @@ class SupportController {
     }
   }
 
-  // Update ticket
+  // Update support ticket status or assignment fields.
   static async update(req, res) {
     try {
       const { id } = req.params;
@@ -198,7 +198,7 @@ class SupportController {
     }
   }
 
-  // Assign ticket to user
+  // Assign a support ticket to a specific user or the current user.
   static async assign(req, res) {
     try {
       const { id } = req.params;
@@ -226,7 +226,7 @@ class SupportController {
     }
   }
 
-  // Resolve ticket
+  // Mark a support ticket as resolved and store resolver info.
   static async resolve(req, res) {
     try {
       const { id } = req.params;
@@ -252,7 +252,7 @@ class SupportController {
     }
   }
 
-  // Add response to ticket
+  // Add a public or internal response to a support ticket.
   static async addResponse(req, res) {
     try {
       const { id } = req.params;
@@ -278,7 +278,7 @@ class SupportController {
     }
   }
 
-  // Delete ticket
+  // Permanently delete a support ticket.
   static async delete(req, res) {
     try {
       const { id } = req.params;
@@ -304,7 +304,7 @@ class SupportController {
     }
   }
 
-  // Get ticket statistics
+  // Return support ticket summary counts for the dashboard.
   static async getStatistics(req, res) {
     try {
       const stats = await Support.getStatistics();

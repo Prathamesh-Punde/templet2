@@ -1,5 +1,6 @@
 const authorize = (...allowedRoles) => {
   return (req, res, next) => {
+    // Allow the request only when the authenticated user's role is permitted.
     if (!req.user) {
       return res.status(401).json({ 
         error: 'Unauthorized',

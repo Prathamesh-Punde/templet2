@@ -3,6 +3,7 @@ const crypto = require('crypto');
 
 class Support {
   // Generate unique ticket number
+  // Build a human-readable unique support ticket reference.
   static generateTicketNumber() {
     const datePart = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const randomPart = crypto.randomBytes(3).toString('hex').toUpperCase();
@@ -10,6 +11,7 @@ class Support {
   }
 
   // Create new support ticket
+  // Insert a new support ticket with default pending status.
   static async create(ticketData) {
     const { customer_name, customer_email, customer_phone, subject, message, priority } = ticketData;
     for (let attempt = 0; attempt < 5; attempt++) {
@@ -40,6 +42,7 @@ class Support {
   }
 
   // Get all support tickets
+  // Fetch support tickets with optional filters and assignee info.
   static async findAll(filters = {}) {
     let query = `
       SELECT st.*, 
@@ -83,6 +86,7 @@ class Support {
   }
 
   // Get ticket by ID
+  // Fetch one support ticket with assignment and resolution details.
   static async findById(id) {
     const result = await pool.query(
       `SELECT st.*, 
@@ -99,6 +103,7 @@ class Support {
 
   // Public tracking lookup by ticket number + mobile number.
   // Mobile must exist in customers table and match ticket customer phone.
+  // Validate a support ticket against ticket number and mobile number.
   static async findByTrackingAndMobile(ticketNumber, mobileNo) {
     const result = await pool.query(
       `SELECT st.ticket_number, st.customer_name, st.subject, st.status, st.priority,
@@ -119,6 +124,7 @@ class Support {
   }
 
   // Update ticket
+  // Update a ticket's status, priority, or assignee.
   static async update(id, ticketData) {
     const { status, priority, assigned_to } = ticketData;
 
@@ -136,6 +142,7 @@ class Support {
   }
 
   // Assign ticket to user
+  // Assign a ticket to a user and move it into progress.
   static async assign(ticketId, userId) {
     const result = await pool.query(
       `UPDATE support_tickets 
@@ -148,6 +155,7 @@ class Support {
   }
 
   // Resolve ticket
+  // Mark the ticket as resolved and record resolver details.
   static async resolve(ticketId, userId) {
     const result = await pool.query(
       `UPDATE support_tickets 
@@ -162,6 +170,7 @@ class Support {
   }
 
   // Add response to ticket
+  // Store a public or internal response against a ticket.
   static async addResponse(ticketId, userId, responseText, isInternal = false) {
     const result = await pool.query(
       `INSERT INTO ticket_responses (ticket_id, user_id, response, is_internal)
@@ -173,6 +182,7 @@ class Support {
   }
 
   // Get ticket responses
+  // Fetch all responses for a ticket in chronological order.
   static async getResponses(ticketId) {
     const result = await pool.query(
       `SELECT tr.*, u.username as user_name
@@ -186,6 +196,7 @@ class Support {
   }
 
   // Delete ticket
+  // Permanently remove a support ticket.
   static async delete(id) {
     const result = await pool.query(
       'DELETE FROM support_tickets WHERE id = $1 RETURNING id',
@@ -195,6 +206,7 @@ class Support {
   }
 
   // Get ticket statistics
+  // Return dashboard counts for support ticket statuses and priority.
   static async getStatistics() {
     const result = await pool.query(`
       SELECT 
@@ -209,6 +221,7 @@ class Support {
   }
 
   // Get ticket by tracking number for public tracking workflow.
+  // Fetch a support ticket by tracking ID only.
   static async findByTrackingNumber(ticketNumber) {
     const result = await pool.query(
       `SELECT st.ticket_number, st.customer_name, st.customer_phone, st.subject, st.status,
@@ -223,6 +236,7 @@ class Support {
   }
 
   // Check whether mobile number exists in customers table.
+  // Confirm whether the provided mobile number belongs to a customer record.
   static async isCustomerMobileRegistered(mobileNo) {
     const result = await pool.query(
       `SELECT 1

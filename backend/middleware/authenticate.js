@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const pool = require('../config/database');
 
 const authenticate = async (req, res, next) => {
+  // Verify the JWT token, load the user, and attach the user to the request.
   try {
     // Get token from header
     const authHeader = req.headers.authorization;

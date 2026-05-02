@@ -1,6 +1,7 @@
 const pool = require('../config/database');
 
 class Enquiry {
+  // Insert a new enquiry coming from the public contact form.
   static async create(enquiryData) {
     const {
       name,
@@ -30,6 +31,7 @@ class Enquiry {
     return result.rows[0];
   }
 
+  // Fetch enquiries with optional filters and handler name.
   static async findAll(filters = {}) {
     let query = `
       SELECT e.*, u.username as handled_by_name
@@ -63,6 +65,7 @@ class Enquiry {
     return result.rows;
   }
 
+  // Fetch one enquiry record by ID.
   static async findById(id) {
     const result = await pool.query(
       `SELECT e.*, u.username as handled_by_name
@@ -75,6 +78,7 @@ class Enquiry {
     return result.rows[0];
   }
 
+  // Update enquiry follow-up fields and ownership.
   static async update(id, enquiryData, userId) {
     const {
       call_time,
@@ -98,6 +102,7 @@ class Enquiry {
     return result.rows[0];
   }
 
+  // Remove an enquiry permanently.
   static async delete(id) {
     const result = await pool.query(
       'DELETE FROM enquiries WHERE id = $1 RETURNING id',
@@ -107,6 +112,7 @@ class Enquiry {
     return result.rows[0];
   }
 
+  // Return enquiry dashboard summary counts.
   static async getStatistics() {
     const result = await pool.query(`
       SELECT
